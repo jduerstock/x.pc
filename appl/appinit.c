@@ -36,11 +36,11 @@ IMPORT BOOL clear_pad;			/* flag which is set by link to tell
 					 * structure before exiting.
 					 */
 IMPORT BUFLET *pecho;			/* pointer to echo buflet */
-IMPORT BUFLET *ptrans;			/* current transmit assembly pointer */ 
-IMPORT CHNLINFO cis[]; 			/* channel information structure */
+IMPORT BUFLET *ptrans;			/* current transmit assembly pointer */
+IMPORT CHNLINFO cis[];			/* channel information structure */
 IMPORT DEVSTAT dev_stat;                /* device status structure */
 IMPORT INT numecho;			/* number of echo bytes */
-IMPORT LCIINFO lcis[];                  /* logical channel information 
+IMPORT LCIINFO lcis[];                  /* logical channel information
 					 * structures.
 					 */
 IMPORT PORTPARAMS port_params;          /* port parameter structure */
@@ -52,9 +52,9 @@ IMPORT UWORD program_error;             /* program error code */
 IMPORT UWORD trans_idx;			/* transmit assembly index */
 IMPORT WORD pend_inc_calls;	        /* number of pending incomming calls */
 IMPORT UWORD rnr_buflets_req;		/* number of buflets required before
-    					 * RNRing.
-    					 */
-    
+					 * RNRing.
+					 */
+
 /************************************************************************
  * VOID oth_initialization()
  *
@@ -69,13 +69,13 @@ IMPORT UWORD rnr_buflets_req;		/* number of buflets required before
 VOID oth_initialization()
     {
     INT i, j;
-    
+
 
     /* Initialize Logical channel information structure for every channel.
      */
     for (i = 0; i <= MAX_CHNL; ++i)
         {
-	
+
 	/* Initialize the application channel number, the session state,
          * and the clear code.
 	 */
@@ -84,7 +84,7 @@ VOID oth_initialization()
 	lcis[i].ssncleartime = 0;
 	lcis[i].ssnclearcode = 0;
 	lcis[i].flowstate = 0;
-	
+
 	/* Clear the pad output queue pointers and the number of chains
          * in the pad output queue.  The pad output queue had to have
          * been flushed before this routine is called.
@@ -95,53 +95,53 @@ VOID oth_initialization()
         lcis[i].inpktqueue.begqueue = 0;
 
 	/* Clear the pad input queue pointers and the number of chains
-	 * in the pad input queue.  The pad input queue has to have 
+	 * in the pad input queue.  The pad input queue has to have
 	 * been flushed before this routine is called.
 	 */
         lcis[i].inpktqueue.endqueue = 0;
         lcis[i].inpktqueue.nchains = 0;
 	}
-	
+
     /* Clear information in the channel information structure for
      * every channel.
      */
     for (i = 0; i <= MAX_CHNL; ++i)
 	{
-	
+
 	/* Clear the channel state and the logical channel number.
 	 * and the session clear code.
 	 */
 	cis[i].chnlstate = CHNL_DISCONNECTED;
 	cis[i].logicalchnl = 0;
 	cis[i].clearcode = 0;
-	
+
 	/* Disconnect the channels.
 	 */
         cis[i].lcistruct = (LCIINFO *)NULLBUF;
-	
+
 	/* Clear echo states.
 	 */
 	cis[i].tymechostate = T0;
 	cis[i].mciechostate = M0;
-	
+
 	/* Clear pointers to transmit assembly packet, echo packet and
 	 * session data.
 	 */
 	cis[i].assemblypkt = cis[i].echopkt = cis[i].ssndatapkt = NULLBUF;
 	cis[i].idxssndata = 0;
 	cis[i].nwritebytes = cis[i].idxechodata = 0;
-	
+
 	/* Clear pointers to application read queues.
 	 */
 	cis[i].readqueue.begqueue = cis[i].readqueue.endqueue = 0;
         cis[i].readqueue.nchains = 0;
         cis[i].nreadbytes = cis[i].idxreadqueue = 0;
         cis[i].idxreadqueue = cis[i].nreadbytes = cis[i].idxssndata = 0;
-	
+
 	/* Turn off flow control flag.
 	 */
 	cis[i].holdassembly = NO;
-	
+
 	/* clear interrupts
 	 */
 	cis[i].timerevent = cis[i].checkevent = 0;
@@ -159,7 +159,7 @@ VOID oth_initialization()
         cis[i].padparams[FWD_TIME] = DEFAULT_FWD_TIME;
 	}
     program_error = 0;
-  
+
     /* Initialize the port parameters structure.
      */
     default_params.baudrate = port_params.baudrate = DEFAULT_BAUD;
@@ -181,7 +181,7 @@ VOID oth_initialization()
     dev_stat.inchnls = 0;
     dev_stat.twaychnls = 0;
     dev_stat.outchnls = 0;
- 
+
 
     /* Clear the variables which are used by the application and
      * packet processing.
@@ -189,14 +189,14 @@ VOID oth_initialization()
     pend_inc_calls = 0;			/* number of pending incoming
 					 * calls.
 				         */
-    program_error = 0;			/* The last program error which 
+    program_error = 0;			/* The last program error which
 					 * occurred.
 					 */
     numecho = 0;			/* The number of characters in
 					 * the echo buflet.
 					 */
     pecho = NULLBUF;			/* Pointer to echo buflet */
-    ptrans = NULLBUF;			/* Current position in transmit 
+    ptrans = NULLBUF;			/* Current position in transmit
 					 * buffer.
 					 */
     trans_idx = 0;			/* Index into transmit buffer */
@@ -207,10 +207,10 @@ VOID oth_initialization()
     cis[0].lcistruct = &lcis[0];	/* Link channel 0 */
     lcis[0].appchnl = 0;
     rnr_buflets_req = BUFLET_LOWATER;	/* set number of buflets required
-    					 * before RNRing.
-    					 */
+					 * before RNRing.
+					 */
     adjust_time_len();			/* adjust the timeout values depending
-					 * on the number of channels 
+					 * on the number of channels
 					 * and the baud rate.
 					 */
     }
@@ -231,14 +231,14 @@ VOID oth_initialization()
 VOID app_initialization()
     {
     INT i;
-    
 
-    /* Initialize link information in the logical channel 
+
+    /* Initialize link information in the logical channel
      * information structure.
      */
     for (i = 0; i <= MAX_CHNL; ++i)
         {
-	
+
 	/* Initialize link states.   app_initialization should not be called
          * once the driver has been loaded.
 	 */
@@ -248,35 +248,35 @@ VOID app_initialization()
 	lcis[i].dxeflowstate = F1;
 	lcis[i].dteflowstate = G1;
 	lcis[i].restartstate = R1;
-	
+
 	/* Initialize the link retry counters.
 	 */
 	lcis[i].r20trans = 0;
 	lcis[i].r22trans = 0;
 	lcis[i].r25trans = 0;
 	lcis[i].r27trans = 0;
-	
+
 	/* Initialize link flags.
 	 */
 	lcis[i].pktrejected = NO;	/* Last packet rejected */
 	lcis[i].rnrtransmitted = NO;	/* Last control packet was RNR */
 	lcis[i].retransmitdata = NO;	/* Last packet should be retransmitted
 					 */
-	
+
 	/* Initialize the window parameters for the input and output
          * windows.
 	 */
-	
+
 	init_window(&lcis[i]);
-	
+
 	/* Clear the pointers to link queues.
 	 */
 	lcis[i].linkoutqueue.begqueue = 0;
 	lcis[i].linkoutqueue.endqueue = 0;
         lcis[i].linkoutqueue.nchains = 0;
 	}
-	
-    
+
+
     /* Clear flags which are used by the application.
      */
     app_active = NO;			/* Application is active */
@@ -287,8 +287,3 @@ VOID app_initialization()
      */
     oth_initialization();
     }
-
-
-
-    
-

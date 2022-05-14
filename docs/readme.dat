@@ -101,4 +101,3 @@ Read the .BAT files for more detail.
 A Lint script (LINTXPC.BAT) is also on the \XPC directory.  Of
 course Gimpel's PC Lint must be properly installed in the path
 command of the autoexec.bat for this to work.
-

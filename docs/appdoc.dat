@@ -938,4 +938,3 @@ S(tatus            = Looping routine that checks, then displays, channel
 
     4.   Obviously, a connection to the TYMNET network cannot be made
          without a modem.  Make sure the modem is properly configured.
-

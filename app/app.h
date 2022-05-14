@@ -114,4 +114,3 @@ extern	 PCB_STR   port;
 
 #define  DEBUG	  0		 /* some packet layer files generate extra   */
 				 /* code when this flag set to value of 1!!! */
-
