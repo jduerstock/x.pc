@@ -267,7 +267,8 @@ properly chaining to whichever vector was previously using it, the
 current X.PC driver uses the 0x8 vector for it's timer interrupt
 handling. This is different from earlier versions of the driver,
 and could potentially cause conflicts with comm programs which
-change this vector after a device reset (they should not be doing çäthis). We have added a parameter (-T) which will initialize the
+change this vector after a device reset (they should not be doing
+this). We have added a parameter (-T) which will initialize the
 vector at load time instead of at Device Reset time, which should
 allow the driver to work with any program which chains on the 0x8
 vector.

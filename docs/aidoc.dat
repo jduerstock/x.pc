@@ -1,7 +1,8 @@
 AIDOC.DAT - March 13, 1987
 
 
-AI.EXE is a simple application created to allow testing of X.PC çäfunction calls.
+AI.EXE is a simple application created to allow testing of X.PC
+function calls.
 
 To use AI you will need a PC or AT with 256K of memory and a serial
 port. AI was created to meet KCI's immediate debugging needs with
