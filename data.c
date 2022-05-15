@@ -133,6 +133,3 @@ BOOL use_timer_int = YES;		/* Should Device Reset set and
 					 * reset the timer interrupt
 					 * vectors?
 					 */
-
-
-
