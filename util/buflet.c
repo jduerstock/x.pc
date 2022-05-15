@@ -173,9 +173,3 @@ VOID free_buf(pc)
     free_count += count;		/* adjust buflet free count */
     int_enable();			/* enable interrupts */
     }
-
-
-
-
-
-
